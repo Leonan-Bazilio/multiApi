@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-
-export default function IPAddressFinder () {
+import styles from "./styles.module.css";
+export default function IPAddressFinder() {
   const [ip, setIp] = useState("");
   const [ipData, setIpData] = useState(null);
 
@@ -15,7 +15,7 @@ export default function IPAddressFinder () {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <h1>IP Address Finder</h1>
       <input
         type="text"
@@ -25,7 +25,7 @@ export default function IPAddressFinder () {
       />
       <button onClick={findIP}>Find IP</button>
       {ipData && (
-        <div>
+        <div className={styles.resultsContainer}>
           <p>
             <strong>IP:</strong> {ipData.ip}
           </p>
@@ -40,5 +40,4 @@ export default function IPAddressFinder () {
       )}
     </div>
   );
-};
-
+}

@@ -20,13 +20,16 @@ export default function MovieSearch() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Movie Search Engine</h1>
-      <input className="query"
+      <input
+        className={styles.inputQuery}
         type="text"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         placeholder="Search for a movie"
       />
-      <button className="search" onClick={searchMovies}>Search</button>
+      <button className="btnSearch" onClick={searchMovies}>
+        Search
+      </button>
       <div className={styles.moviesContainer}>
         {movies &&
           movies.map((movie) => (
