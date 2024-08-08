@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import styles from "./styles.module.css";
-
-const API_URL = "http://localhost:5173/db.json";
 
 export default function TodoApp() {
   const [task, setTask] = useState("");
@@ -11,26 +8,28 @@ export default function TodoApp() {
   const [editingTaskText, setEditingTaskText] = useState("");
 
   useEffect(() => {
-    fetchTasks();
+    const tasksInLocalStorage = JSON.parse(localStorage.getItem("tasks")) || [];
+    setTasks(tasksInLocalStorage);
   }, []);
 
-  const fetchTasks = async () => {
-    const response = await axios.get(API_URL);
-    setTasks(response.data.tasks);
-    console.log(response.data.tasks);
-    console.log(tasks);
+  const saveTasksToLocalStorage = (tasks) => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   };
-  const addTask = async () => {
+
+  const addTask = () => {
     if (task) {
-      const newTask = { text: task };
-      const response = await axios.post(API_URL, newTask);
-      setTasks([...tasks, response.data]);
+      const newTask = { id: Date.now(), text: task };
+      const updatedTasks = [...tasks, newTask];
+      setTasks(updatedTasks);
+      saveTasksToLocalStorage(updatedTasks);
+      setTask("");
     }
   };
 
-  const deleteTask = async (id) => {
-    await axios.delete(`${API_URL}/${id}`);
-    setTasks(tasks.filter((task) => task.id !== id));
+  const deleteTask = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+    saveTasksToLocalStorage(updatedTasks);
   };
 
   const editTask = (id, text) => {
@@ -38,14 +37,12 @@ export default function TodoApp() {
     setEditingTaskText(text);
   };
 
-  const updateTask = async (id) => {
-    const updatedTask = { text: editingTaskText };
-    await axios.put(`${API_URL}/${id}`, updatedTask);
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, text: editingTaskText } : task
-      )
+  const updateTask = (id) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, text: editingTaskText } : task
     );
+    setTasks(updatedTasks);
+    saveTasksToLocalStorage(updatedTasks);
     setEditingTaskId(null);
     setEditingTaskText("");
   };
@@ -75,7 +72,7 @@ export default function TodoApp() {
             ) : (
               <>
                 {task.text}
-                <div>
+                <div className={styles.buttonsTask}>
                   <button onClick={() => editTask(task.id, task.text)}>
                     Edit
                   </button>
