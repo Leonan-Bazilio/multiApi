@@ -1,25 +1,7 @@
-
 import { useState, useEffect } from "react";
 import styles from "./styles.module.css";
-import {
-  Route,
-  Routes,
-  Navigate,
-  useNavigate,
-  useLocation,
-  Link,
-} from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
-import {
-  FaQrcode,
-  FaSearch,
-  FaTasks,
-  FaRegQuestionCircle,
-  FaGlobeAmericas,
-  FaNetworkWired,
-  FaBars,
-  FaArrowLeft,
-} from "react-icons/fa";
+import { FaBars, FaArrowLeft } from "react-icons/fa";
 import QRCodeGenerator from "../../components/QRCodeGenerator";
 import IPAddressFinder from "../../components/IPAddressFinder";
 import MovieSearchEngine from "../../components/MovieSearch";
@@ -29,51 +11,37 @@ import LanguageTranslator from "../../components/LanguageTranslator";
 import Login from "../../components/Login";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import CarouselItem from "../../components/CarouselItem";
 
 export default function MainCarousel() {
-  
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
   const [currentComponent, setCurrentComponent] = useState(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
-  const navigate = useNavigate(); // Hook para navegação.
 
-   
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]);
-
-   
   const handleLogin = () => {
     setIsAuthenticated(true);
-    navigate("/qrcode-generator");
   };
 
-   
   const handleLogout = () => {
     setIsAuthenticated(false);
-    navigate("/");
   };
 
-  
   const toggleNavBar = () => {
     setIsNavBarOpen(!isNavBarOpen);
   };
 
-   
   const handleAccess = (index, component) => {
     setCarouselIndex(index);
     setCurrentComponent(component);
   };
 
-   
   const handleReturn = () => {
     setCurrentComponent(null);
   };
 
-   
   const renderComponent = () => {
     switch (currentComponent) {
       case "QRCodeGenerator":
@@ -93,7 +61,6 @@ export default function MainCarousel() {
     }
   };
 
-  
   return (
     <div className={styles.appContainer}>
       <div className={styles.navBarToggle} onClick={toggleNavBar}>
@@ -105,45 +72,11 @@ export default function MainCarousel() {
         </div>
       ) : (
         <>
-          <div
-            className={`${styles.navBar} ${isNavBarOpen ? styles.isOpen : ""}`}
-          >
-            <Link onClick={() => handleAccess(0, "QRCodeGenerator")}>
-              <FaQrcode />
-              QR Code Generator
-            </Link>
-            <Link onClick={() => handleAccess(1, "IPAddressFinder")}>
-              <FaNetworkWired />
-              IP Address Finder
-            </Link>
-            <Link onClick={() => handleAccess(2, "MovieSearchEngine")}>
-              <FaSearch />
-              Movie Search
-            </Link>
-            <Link onClick={() => handleAccess(3, "TodoApp")}>
-              <FaTasks />
-              Todo App
-            </Link>
-            <Link onClick={() => handleAccess(4, "QuizApp")}>
-              <FaRegQuestionCircle />
-              Quiz App
-            </Link>
-            <Link onClick={() => handleAccess(5, "LanguageTranslator")}>
-              <FaGlobeAmericas />
-              Translator
-            </Link>
-            <button
-              onClick={handleLogout}
-              style={{
-                marginTop: "20px",
-                color: "white",
-                backgroundColor: "transparent",
-                border: "none",
-              }}
-            >
-              Logout
-            </button>
-          </div>
+          <Navbar
+            handleLogout={handleLogout}
+            isNavBarOpen={isNavBarOpen}
+            handleAccess={handleAccess}
+          />
           <div className={styles.mainContent}>
             {currentComponent ? (
               <>
@@ -164,52 +97,34 @@ export default function MainCarousel() {
                   selectedItem={carouselIndex}
                   onChange={(index) => setCarouselIndex(index)}
                 >
-                  <div className={styles.carouselItem}>
-                    <h2>QR Code Generator</h2>
-                    <button onClick={() => handleAccess(0, "QRCodeGenerator")}>
-                      Acessar
-                    </button>
-                  </div>
-                  <div className={styles.carouselItem}>
-                    <h2>IP Address Finder</h2>
-                    <button onClick={() => handleAccess(1, "IPAddressFinder")}>
-                      Acessar
-                    </button>
-                  </div>
-                  <div className={styles.carouselItem}>
-                    <h2>Movie Search Engine</h2>
-                    <button
-                      onClick={() => handleAccess(2, "MovieSearchEngine")}
-                    >
-                      Acessar
-                    </button>
-                  </div>
-                  <div className={styles.carouselItem}>
-                    <h2>Todo App</h2>
-                    <button onClick={() => handleAccess(3, "TodoApp")}>
-                      Acessar
-                    </button>
-                  </div>
-                  <div className={styles.carouselItem}>
-                    <h2>Quiz App</h2>
-                    <button onClick={() => handleAccess(4, "QuizApp")}>
-                      Acessar
-                    </button>
-                  </div>
-                  <div className={styles.carouselItem}>
-                    <h2>Language Translator</h2>
-                    <button
-                      onClick={() => handleAccess(5, "LanguageTranslator")}
-                    >
-                      Acessar
-                    </button>
-                  </div>
+                  <CarouselItem
+                    title={"QR Code Generator"}
+                    handleClick={() => handleAccess(0, "QRCodeGenerator")}
+                  />
+                  <CarouselItem
+                    title={"IP Address Finder"}
+                    handleClick={() => handleAccess(1, "IPAddressFinder")}
+                  />
+                  <CarouselItem
+                    title={"Movie Search Engine"}
+                    handleClick={() => handleAccess(2, "MovieSearchEngine")}
+                  />
+                  <CarouselItem
+                    title={"Todo App"}
+                    handleClick={() => handleAccess(3, "TodoApp")}
+                  />
+                  <CarouselItem
+                    title={"Quiz App"}
+                    handleClick={() => handleAccess(4, "QuizApp")}
+                  />
+                  <CarouselItem
+                    title={"Language Translator"}
+                    handleClick={() => handleAccess(5, "LanguageTranslator")}
+                  />
                 </Carousel>
               </div>
             )}
-            <div className={styles.footer}>
-              © 2024 Your Company | All rights reserved
-            </div>
+            <Footer />
           </div>
         </>
       )}

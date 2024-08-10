@@ -32,31 +32,6 @@
   border-radius: 20px;
   padding: 20px;
 }
-
- 
-.navBar {
-  width: 240px;
-  background-color: #2c3e50;
-  color: white;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  box-shadow: 3px 0 15px rgba(0, 0, 0, 0.3);
-}
-
-.navBar.isOpen {
-  @media (max-width: 768px) {
-    width: 100%;
-    height: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-  }
-}
-
  
 .navBarToggle {
   display: none;
@@ -74,80 +49,6 @@
 }
 
  
-.navBar a {
-  color: white;
-  text-decoration: none;
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.navBar a:hover {
-  background-color: #34495e;
-  color: #ecf0f1;
-}
-
- 
-.footer {
-  width: 100%;
-  background-color: #2c3e50;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-  position: absolute;
-  bottom: 0;
-}
-
-@media (max-width: 768px) {
-  .footer {
-    padding: 5px 0;
-    font-size: 12px;
-  }
-}
-
- 
-.carouselItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-  height: 100%;
-  width: 100%;
-}
-
-.carouselItem:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
-
-.carouselItem h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: white;
-}
-
-.carouselItem button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-  font-size: 16px;
-}
-
-.carouselItem button:hover {
-  background-color: #0056b3;
-}
 
  
 .returnButton {
