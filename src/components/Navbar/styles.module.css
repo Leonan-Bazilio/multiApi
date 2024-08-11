@@ -8,7 +8,11 @@
   padding: 20px;
   box-shadow: 3px 0 15px rgba(0, 0, 0, 0.3);
 }
-
+.navBar {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
 .navBar.isOpen {
   @media (max-width: 768px) {
     width: 100%;

@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./styles.module.css";
 import { Carousel } from "react-responsive-carousel";
-import { FaBars, FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import QRCodeGenerator from "../../components/QRCodeGenerator";
 import IPAddressFinder from "../../components/IPAddressFinder";
 import MovieSearchEngine from "../../components/MovieSearch";
@@ -14,6 +14,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import CarouselItem from "../../components/CarouselItem";
+import NavBarToggle from "../../components/NavbarToggle";
 
 export default function MainCarousel() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -63,9 +64,7 @@ export default function MainCarousel() {
 
   return (
     <div className={styles.appContainer}>
-      <div className={styles.navBarToggle} onClick={toggleNavBar}>
-        <FaBars size={24} color="#2C3E50" />
-      </div>
+      <NavBarToggle toggleNavBar={toggleNavBar} />
       {!isAuthenticated ? (
         <div className={styles.mainContent}>
           <Login onLogin={handleLogin} />
