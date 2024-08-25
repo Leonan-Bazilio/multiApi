@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import styles from "./styles.module.css";
 
-export default function Login({ onLogin }) {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username === "admin" && password === "password") {
-      onLogin();
-    } else {
+    const success = await login(username, password);
+    if (!success) {
       alert("Invalid credentials");
     }
   };

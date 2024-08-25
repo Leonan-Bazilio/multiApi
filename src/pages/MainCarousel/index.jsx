@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";  
 import styles from "./styles.module.css";
 import { Carousel } from "react-responsive-carousel";
 import { FaArrowLeft } from "react-icons/fa";
@@ -9,26 +9,19 @@ import TodoApp from "../../components/TodoApp";
 import QuizApp from "../../components/QuizApp";
 import LanguageTranslator from "../../components/LanguageTranslator";
 import Login from "../../components/Login";
-
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import CarouselItem from "../../components/CarouselItem";
 import NavBarToggle from "../../components/NavbarToggle";
+import { AuthContext } from "../../context/AuthContext";
+
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export default function MainCarousel() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const { authenticated, login, logout } = useContext(AuthContext);
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
   const [currentComponent, setCurrentComponent] = useState(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
-
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-  };
 
   const toggleNavBar = () => {
     setIsNavBarOpen(!isNavBarOpen);
@@ -64,26 +57,29 @@ export default function MainCarousel() {
 
   return (
     <div className={styles.appContainer}>
-      <NavBarToggle toggleNavBar={toggleNavBar} />
-      {!isAuthenticated ? (
+      <NavBarToggle
+        toggleNavBar={toggleNavBar}
+        className={styles.navbarteste}
+      />
+      {!authenticated ? (
         <div className={styles.mainContent}>
-          <Login onLogin={handleLogin} />
+          <Login onLogin={login} /> 
         </div>
       ) : (
         <>
           <Navbar
-            handleLogout={handleLogout}
+            handleLogout={logout}
             isNavBarOpen={isNavBarOpen}
             handleAccess={handleAccess}
           />
           <div className={styles.mainContent}>
             {currentComponent ? (
-              <>
+              <div className={styles.cardWithButton}>
                 {renderComponent()}
                 <div className={styles.returnButton} onClick={handleReturn}>
                   <FaArrowLeft /> Return
                 </div>
-              </>
+              </div>
             ) : (
               <div className={styles.carouselContainer}>
                 <Carousel

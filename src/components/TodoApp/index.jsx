@@ -8,8 +8,13 @@ export default function TodoApp() {
   const [editingTaskText, setEditingTaskText] = useState("");
 
   useEffect(() => {
-    const tasksInLocalStorage = JSON.parse(localStorage.getItem("tasks")) || [];
-    setTasks(tasksInLocalStorage);
+    try {
+      const tasksInLocalStorage =
+        JSON.parse(localStorage.getItem("tasks")) || [];
+      setTasks(tasksInLocalStorage);
+    } catch (error) {
+      console.error("Error loading tasks from localStorage:", error);
+    }
   }, []);
 
   const saveTasksToLocalStorage = (tasks) => {

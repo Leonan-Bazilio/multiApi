@@ -1,25 +1,24 @@
-
 .appContainer {
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100vh;
   background-color: #f0f0f0;
+  overflow: hidden;
 }
-
 
 .mainContent {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
- 
 .carouselContainer {
   display: flex;
   flex-direction: column;
@@ -32,8 +31,14 @@
   border-radius: 20px;
   padding: 20px;
 }
- 
+.cardWithButton {
+  display: flex;
+  flex-direction: column;
+  padding: 5rem;
+  align-items: center;
+}
 .returnButton {
+  display: flex;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -41,16 +46,15 @@
   border-radius: 5px;
   cursor: pointer;
   margin-top: 20px;
-  display: flex;
   align-items: center;
   gap: 5px;
+  text-align: center;
 }
 
 .returnButton:hover {
   background-color: #0056b3;
 }
 
- 
 .customCarousel {
   width: 100%;
 }
