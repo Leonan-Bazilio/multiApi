@@ -1,11 +1,11 @@
 import React from "react";
 import { AuthProvider } from "./context/AuthContext";
-import MainCarousel from "./pages/MainCarousel";
 import "./App.css";
+import AppRoutes from "./Routes";
 function App() {
   return (
     <AuthProvider>
-      <MainCarousel />
+      <AppRoutes />
     </AuthProvider>
   );
 }

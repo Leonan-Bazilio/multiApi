@@ -8,8 +8,7 @@ import {
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authenticated, setAuthenticated] = useState(false);
-
+  const [authenticated, setAuthenticated] = useState(null);
   const login = async (username, password) => {
     const success = await performLogin(username, password);
     if (success) {
@@ -24,11 +23,16 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    (async () => {
+    const verifyAuth = async () => {
       const isAuthenticated = await checkAuth();
       setAuthenticated(isAuthenticated);
-    })();
+    };
+    verifyAuth();
   }, []);
+
+  if (authenticated === null) {
+    return null;
+  }
 
   return (
     <AuthContext.Provider value={{ authenticated, login, logout }}>
